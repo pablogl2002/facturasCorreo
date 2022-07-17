@@ -1,7 +1,6 @@
 package facturasCorreo;
 
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -14,29 +13,25 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+/**
+ *
+ * @author pablo
+ */
 public class Mail {
-	private String correoDeOrigen;
-    private String correoDeDestino;
-    private String asunto;
-    private String mensajeDeTexto;
-    private String password;
+    private String srcMail;
+    private String dstMail;
+    private String sbj;
+    private String tMsg;
+    private String psw;
     private int year;
-            
-    public Mail(String origen,String destino,String asunto, String txt,String password, int year){
-    	this.correoDeOrigen = origen;
-    	this.correoDeDestino = destino;
-    	this.asunto = asunto;
-    	this.mensajeDeTexto = txt;
-    	this.password = password;   
-        this.year = year;
-    }
     
-    
-    public static void main(String[] args) {
-    	String to = "pablogl2002@gmail.com";
-    	System.out.println("Preparando...");
-    	envioDeCorreos(to, "marzo", 7, "black ice.xlsx", 2022);
-    	System.out.println("Enviado");
+    public Mail(String origen, String destino, String asunto, String txt, String contraseÃ±a, int anyo) {
+        srcMail = origen;
+        dstMail = destino;
+        sbj = asunto;
+        tMsg = txt;
+        psw = contraseÃ±a;
+        year = anyo;
     }
     
     public static void envioDeCorreos(String to,String month, int nFact, String file, int year){
@@ -44,14 +39,13 @@ public class Mail {
 		String pwd = "mueble1963";
 		
 		String subject = "Factura " + month;
-		String txt = "Adjunto factura nº " + nFact + " correspondiente al mes de " + month + " de "+ year + "\n" + "\n"
-              + "Un saludo, Enrique García.\n" ;
+		String txt = "Adjunto factura nÂº " + nFact + " correspondiente al mes de " + month + " de "+ year + "\n" + "\n"
+              + "Un saludo, Enrique GarcÃ­a.\n" ;
 		
 		Mail m = new Mail(from, to, subject, txt, pwd, year);
 	  	m.envioDeMensajes(file);
     }
     
-            
     private void envioDeMensajes(String file){
     	try{
     		//System.out.println("Antes propiedades");
@@ -77,14 +71,11 @@ public class Mail {
     		
     		//adjunto
     		BodyPart texto = new MimeBodyPart();
-    		texto.setText(mensajeDeTexto);
+    		texto.setText(tMsg);
     		BodyPart adjunto = new MimeBodyPart();
-    		//direccion USB
-    		//adjunto.setDataHandler(new DataHandler(new FileDataSource("D:/CLIENTES/año "+ year + "/pdf/" + file)));
-    		//direccion carlos
-    		adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/carlo/Desktop/CLIENTES/año "+ year + "/pdf/" + file)));
-    		//direccion papa
-    		//adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/pablo/Desktop/CLIENTES/año "+ year + "/pdf/" + file)));
+    		//adjunto.setDataHandler(new DataHandler(new FileDataSource("D:/CLIENTES/aÃ±o "+ year + "/facturas terminadas/" + file)));
+    		//adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/Desktop/CLIENTES/aï¿½o "+ year + "/pdf/" + file)));
+            adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/pablo/Desktop/archivo.txt")));
     		adjunto.setFileName(file);
     		MimeMultipart m = new MimeMultipart();
     		m.addBodyPart(texto);
@@ -93,21 +84,24 @@ public class Mail {
     		
     		//Mensaje texto
     		MimeMessage mensaje = new MimeMessage(s);
-    		mensaje.setFrom(new InternetAddress(correoDeOrigen));
-    		mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDeDestino));
-    		mensaje.setSubject(asunto);
+    		mensaje.setFrom(new InternetAddress(srcMail));
+    		mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(dstMail));
+    		mensaje.setSubject(sbj);
     		//mensaje.setText(mensajeDeTexto);
     		mensaje.setContent(m);
 		  
     		//System.out.println("Despues mensaje, antes envio");
 		  
     		Transport t = s.getTransport("smtp");
-    		t.connect(correoDeOrigen,password);
+    		t.connect(srcMail, psw);
     		t.sendMessage(mensaje, mensaje.getAllRecipients());
     		t.close();
-    		//System.out.println("exito");
-    	} catch (MessagingException e) {
-    	  	System.out.print(e);
-    	}
+    		//System.out.println("exito")
+                IntFactC.sentMessage();
+	} catch (MessagingException ex) {
+            IntFactC.messageErrorAlert(ex);
+        } catch (NullPointerException e) {
+            IntFactC.fileNotFoundAlert();
+        }
     }
 }

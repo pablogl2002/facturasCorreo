@@ -78,7 +78,8 @@ public class Mail {
     		texto.setText(tMsg);
     		BodyPart adjunto = new MimeBodyPart();
     		//adjunto.setDataHandler(new DataHandler(new FileDataSource("D:/CLIENTES/a�o "+ year + "/pdf/" + file)));
-    		adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/Desktop/CLIENTES/a�o "+ year + "/pdf/" + file)));
+    		//adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/Desktop/CLIENTES/a�o "+ year + "/pdf/" + file)));
+                adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/pablo/Desktop/archivo.txt")));
     		adjunto.setFileName(file);
     		MimeMultipart m = new MimeMultipart();
     		m.addBodyPart(texto);
@@ -102,7 +103,7 @@ public class Mail {
     		//System.out.println("exito")
                 IntFactC.sentMessage();
 	} catch (MessagingException ex) {
-            System.out.println(ex);
+            IntFactC.messageErrorAlert(ex);
         } catch (NullPointerException e) {
             IntFactC.fileNotFoundAlert();
         }

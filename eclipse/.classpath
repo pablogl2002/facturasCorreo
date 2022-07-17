@@ -6,10 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/pablo/Desktop/OneDrive - UPV/COSAS/proyectos/github/facturasCorreo/mail lib/javax.activation-1.1.0.v201105071233.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pablo/Desktop/OneDrive - UPV/COSAS/proyectos/github/facturasCorreo/mail lib/javax.ejb.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pablo/Desktop/OneDrive - UPV/COSAS/proyectos/github/facturasCorreo/mail lib/javax.faces-api-2.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pablo/Desktop/OneDrive - UPV/COSAS/proyectos/github/facturasCorreo/mail lib/javax-inject.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pablo/Desktop/OneDrive - UPV/COSAS/proyectos/github/facturasCorreo/mail lib/mail.jar"/>
+	<classpathentry kind="lib" path="mail lib/javax.activation-1.1.0.v201105071233.jar"/>
+	<classpathentry kind="lib" path="mail lib/javax.ejb.jar"/>
+	<classpathentry kind="lib" path="mail lib/javax.faces-api-2.0.jar"/>
+	<classpathentry kind="lib" path="mail lib/javax-inject.jar"/>
+	<classpathentry kind="lib" path="mail lib/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
